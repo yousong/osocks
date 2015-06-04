@@ -17,5 +17,5 @@ install(TARGETS osocks
 )
 
 add_custom_target(run ./osocks -p 7001
-	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+	WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )
