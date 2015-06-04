@@ -82,6 +82,11 @@ static void cb_self(struct uloop_fd *fd, unsigned int events)
 	 * buffer setting
 	 *  - ufd -> dfd, big data
 	 *  - control memory usage.
+	 *
+	 * Care should be taken on the edge case that only 1 buffer is alloed
+	 * in the r/w buflist.  In that case, remember to relax buflist of the
+	 * other end a bit in notify_write() callback.  Otherwise dead wating
+	 * could occur.
 	 */
 	sess->dfd.stream.w.buffer_len = OSOCKS_BUFLEN;
 	sess->dfd.stream.w.min_buffers = 1;
