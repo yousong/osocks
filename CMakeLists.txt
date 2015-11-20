@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 project(osocks C)
 
-add_definitions(-Os -ggdb -Wall -Werror --std=gnu99 -Wmissing-declarations)
+add_definitions(-Os -ggdb -Wall --std=gnu99 -Wmissing-declarations)
 
 option(DEBUG "Compile for debugging purposes." OFF)
 if(DEBUG)
