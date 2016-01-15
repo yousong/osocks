@@ -24,6 +24,29 @@ The current synopsis is as follows.
 
 It will run on `0.0.0.0:1080` by default if neither `-l` nor `-p` is present.
 
+## NGINX and TCP proxy
+
+The `nginx_stream_core_module` is available in official NGINX since 1.9.0
+
+Sample configuration
+
+	stream {
+		upstream osocks {
+			server 127.0.0.1:7001;
+			server 127.0.0.1:7002;
+			server 127.0.0.1:7003;
+			server 127.0.0.1:7004;
+		}
+
+		server {
+			listen 7000;
+			proxy_pass osocks;
+		}
+	}
+
+- Module `ngx_stream_core_module`, http://nginx.org/en/docs/stream/ngx_stream_core_module.html
+- TCP Load Balancing with NGINX 1.9.0 and NGINX Plus R6, https://www.nginx.com/blog/tcp-load-balancing-with-nginx-1-9-0-and-nginx-plus-r6/
+
 ## FAQ
 
 - Why not just using an existing implementation?
@@ -89,7 +112,7 @@ See `tests.sh` for more details.
 
 - Test multiple osocks with `SO_REUSEPORT`
 - What's the performance gain of single master, multiple workers?
-- recycle pkt_tcp0, pkt_tcp2
+- recycle `pkt_tcp0`, `pkt_tcp2`
 - Reply to request with more explict error information.
 - `-4`, `-6`
 - USERNAME/PASSWORD, GSSAPI authentication support.

@@ -1,11 +1,13 @@
-
+# for zsh
+#
+#	setopt SH_WORD_SPLIT
 sizes="1K 4K 128K 512K 1M 4M 32M 128M 256M"
 
 prepare_file() {
 	local s
 
 	for s in $sizes; do
-		dd if=/dev/random of="data.$s.rand.bin" "bs=$s" count=1
+		dd if=/dev/random of="data.$s.rand.bin" "bs=$s" count=1 conv=sync
 	done
 }
 
@@ -20,7 +22,7 @@ abing() {
 __privoxy() {
 	cat > privoxy.conf <<EOF
 listen-address 127.0.0.1:8081
-forward-socks5 / localhost:7001 .
+forward-socks5 / localhost:7000 .
 EOF
 
 	privoxy --no-daemon privoxy.conf
@@ -33,7 +35,7 @@ proxyPort = 8081
 allowedClients = "0.0.0.0/0"
 proxyName = "polipo.example.org"
 cacheIsShared = false
-socksParentProxy = "localhost:7001"
+socksParentProxy = "localhost:7000"
 socksProxyType = socks5
 disableVia=false
 censoredHeaders = from, accept-language
