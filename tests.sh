@@ -1,7 +1,7 @@
 # for zsh
 #
 #	setopt SH_WORD_SPLIT
-sizes="1K 4K 128K 512K 1M 4M 32M 128M 256M"
+sizes="32 512 1K 4K 128K 512K 4M 32M 256M"
 
 prepare_file() {
 	local s
@@ -50,7 +50,11 @@ EOF
 
 __nginx() {
 	cat >>nginx.conf <<EOF
-worker_process 4;
+worker_processes auto;
+events {
+	worker_connections 10240;
+	accept_mutex off;
+}
 http {
 	default_type application/octet-stream;
 	sendfile on;
